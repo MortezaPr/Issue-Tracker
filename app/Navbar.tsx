@@ -6,7 +6,7 @@ import React from "react";
 import { FaBug } from "react-icons/fa";
 import classNames from "classnames";
 
-const NavBar = () => {
+const Navbar = () => {
   const currentPath = usePathname();
 
   console.log(currentPath);
@@ -41,4 +41,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;
