@@ -1,11 +1,11 @@
 "use client";
 
-import { TextField, Button } from "@radix-ui/themes";
-import SimpleMDE from "react-simplemde-editor";
-import { useForm, Controller } from "react-hook-form";
+import { Button, TextField } from "@radix-ui/themes";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import "easymde/dist/easymde.min.css";
+import { useRouter } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
 
 interface IssueForm {
   title: string;
