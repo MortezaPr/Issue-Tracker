@@ -8,7 +8,7 @@ const EditIssueButton = ({ issueId }: { issueId: number }) => {
     <Button>
       <Link
         className="w-full flex justify-center items-center gap-2"
-        href={`/issues/${issueId}/edit`}
+        href={`/issues/edit/${issueId}`}
       >
         <Pencil2Icon />
         Edit Issue
