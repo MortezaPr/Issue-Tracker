@@ -2,8 +2,11 @@
 
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
+  const router = useRouter();
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -23,11 +26,24 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
         <Flex gap="3" mt="4">
           <AlertDialog.Cancel>
             <Button variant="soft" color="gray">
-              Cancel
+              <div className="cursor-pointer w-full flex justify-center">
+                Cancel
+              </div>
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button color="red">Delete Issue</Button>
+            <Button
+              color="red"
+              onClick={async () => {
+                await axios.delete(`/api/issues/${issueId}`);
+                router.push("/issues");
+                router.refresh();
+              }}
+            >
+              <div className="cursor-pointer w-full flex justify-center">
+                Delete Issue
+              </div>
+            </Button>
           </AlertDialog.Action>
         </Flex>
       </AlertDialog.Content>
