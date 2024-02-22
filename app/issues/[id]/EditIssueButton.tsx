@@ -6,8 +6,13 @@ import React from "react";
 const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
     <Button>
-      <Pencil2Icon />
-      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
+      <Link
+        className="w-full flex justify-center items-center gap-2"
+        href={`/issues/${issueId}/edit`}
+      >
+        <Pencil2Icon />
+        Edit Issue
+      </Link>
     </Button>
   );
 };
