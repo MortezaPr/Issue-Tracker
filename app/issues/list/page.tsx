@@ -4,10 +4,14 @@ import { IssueStatusBadge, Link } from "@/app/components";
 import IssueActions from "./IssueActions";
 import { Issue, Status } from "@prisma/client";
 import NextLink from "next/link";
-import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { ArrowUpIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 
 interface Props {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: {
+    status: Status;
+    orderBy: keyof Issue;
+    sort: "asc" | "desc" | "";
+  };
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
@@ -22,10 +26,16 @@ const IssuesPage = async ({ searchParams }: Props) => {
     ? searchParams.status
     : undefined;
 
+  const sortOrder = () => {
+    return searchParams.sort === "asc" || searchParams.sort === "desc"
+      ? { [searchParams.orderBy]: searchParams.sort }
+      : undefined;
+  };
+
   const orderBy = columns
     .map((column) => column.value)
     .includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
+    ? sortOrder()
     : undefined;
 
   const issues = await prisma.issue.findMany({
@@ -34,6 +44,24 @@ const IssuesPage = async ({ searchParams }: Props) => {
     },
     orderBy,
   });
+
+  const handleSort = () => {
+    if (searchParams.sort === "asc") {
+      return "desc";
+    } else if (searchParams.sort === "desc") {
+      return "";
+    } else {
+      return "asc";
+    }
+  };
+
+  const arrowIcon = () => {
+    if (searchParams.sort === "asc") {
+      return <ArrowUpIcon className="inline" />;
+    } else if (searchParams.sort === "desc") {
+      return <ArrowDownIcon className="inline" />;
+    }
+  };
 
   return (
     <div>
@@ -45,14 +73,16 @@ const IssuesPage = async ({ searchParams }: Props) => {
               <Table.ColumnHeaderCell key={col.value} className={col.className}>
                 <NextLink
                   href={{
-                    query: { ...searchParams, orderBy: col.value },
+                    query: {
+                      ...searchParams,
+                      orderBy: col.value,
+                      sort: handleSort(),
+                    },
                   }}
                 >
                   {col.label}
                 </NextLink>
-                {col.value === searchParams.orderBy && (
-                  <ArrowUpIcon className="inline" />
-                )}
+                {col.value === searchParams.orderBy && arrowIcon()}
               </Table.ColumnHeaderCell>
             ))}
           </Table.Row>
