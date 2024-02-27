@@ -2,15 +2,12 @@
 
 This is an interactive issue tracking application built with Next.js and Prisma. The application features a dynamic table with sortable columns, and leverages Tailwind CSS for responsive design.
 
-## Technologies Used
-
-- Next.js
-- Prisma
-- Tailwind CSS
-
 ## Getting Started
 
-First change the name of .env.example file to .env file and set the required variables according to your machine.
+First clone this repository to your local machine, change the name of .env.example file to .env file and set the required variables according to your machine.
+
+- Install the dependencies.
+- Run `npx prisma migrate dev` to generate your database tables.
 
 Run the development server:
 
